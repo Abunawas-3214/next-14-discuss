@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 import { z } from 'zod'
 import { auth } from '@/auth'
 import { db } from '@/db'
-import paths from '@/path'
+import paths from '@/paths'
 
 const createTopicSchema = z.object({
     name: z.string().min(3).regex(/^[a-z-]+$/, { message: 'Name must be lowercase letters or dashes without spaces' }),
@@ -22,6 +22,8 @@ interface CreateTopicFormState {
 }
 
 export async function createTopic(formState: CreateTopicFormState, formData: FormData): Promise<CreateTopicFormState> {
+    await new Promise((resolve) => setTimeout(resolve, 2500))
+
     const result = createTopicSchema.safeParse({
         name: formData.get('name'),
         description: formData.get('description'),
